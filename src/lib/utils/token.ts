@@ -17,3 +17,11 @@ export const generateToken = async (payload: {
         exp: Date.now() + 1000 * 60 * 60 * Number(JWT_EXPIRATION) // 1 day
     }, secret, { expiresIn: Number(JWT_EXPIRATION) });
 }
+
+export const verifyToken = async (token: string) => {
+    if (!APP_SECRET || !JWT_EXPIRATION) {
+        throw new Error('APP_SECRET or JWT_EXPIRATION is not defined');
+    }
+    const secret = await bcrypt.hash(APP_SECRET, 10);
+    return Jwt.verify(token, secret);
+}
