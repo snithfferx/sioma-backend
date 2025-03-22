@@ -1,0 +1,60 @@
+{
+  "name": "sioma-backend",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Shopify Inventory and Orders Management Application Backend",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "build": "bunx tsc -p src/index.ts",
+    "start": "npm dist/index.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.0",
+    "@shopify/shopify-api": "^11.11.1",
+    "@shopify/shopify-app-session-storage-drizzle": "^2.0.16",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.41.0",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.14.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/bun": "^1.2.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.11",
+    "@typescript-eslint/eslint-plugin": "^8.27.0",
+    "@typescript-eslint/parser": "^8.27.0",
+    "drizzle-kit": "^0.30.5",
+    "tsx": "^4.19.3",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-config-standard": "^17.1.0",
+    "prettier": "^3.5.3",
+    "standard": "^17.1.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.27.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "workspaces": {
+    "packages": [
+      "extensions/*"
+    ]
+  },
+  "trustedDependencies": [
+    "@shopify/plugin-cloudflare"
+  ]
+}
