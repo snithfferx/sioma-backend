@@ -12,7 +12,7 @@
     "start": "npm dist/index.js"
   },
   "dependencies": {
-    "@libsql/client": "^0.15.0",
+    "@libsql/client": "^0.15.1",
     "@shopify/shopify-api": "^11.11.1",
     "@shopify/shopify-app-session-storage-drizzle": "^2.0.16",
     "bcryptjs": "^3.0.2",
@@ -22,6 +22,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0",
+    "slugify": "^1.6.6",
     "zod": "^3.24.2"
   },
   "devDependencies": {
