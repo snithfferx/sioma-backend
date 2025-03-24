@@ -152,17 +152,18 @@ export const Products = sqliteTable('products', {
 export const ProductRelations = sqliteTable('product_relations', {
     id: integer({ mode: 'number' }).primaryKey(),
     product: integer({ mode: 'number' }).notNull(),
-    images: text('images', { mode: 'json' }).default('[]'),
-    brand: integer({ mode: 'number' }).notNull(),
     status: integer({ mode: 'number' }).notNull(),
-    variants: text('variants', { mode: 'json' }).default('[]'),
-    categories: text('categories', { mode: 'json' }).default('[]'),
-    stocks: text('stocks', { mode: 'json' }).default('[]'),
+    brand: integer({ mode: 'number' }).notNull(),
+    categories: text('categories'),
+    images: text('images'),
+    prices: text('prices'),
+    stocks: text('stocks'),
     store: integer({ mode: 'number' }),
+    variants: text('variants'),
     dsin: integer({ mode: 'number' }).notNull(),
-    productTypes: text('product_types', { mode: 'json' }).default('[]'),
-    commonNames: text('common_name', { mode: 'json' }).default('[]'),
-    metafields: text('metafields', { mode: 'json' }).default('[]'),
+    productTypes: text('product_types'),
+    commonNames: text('common_name').default('[]'),
+    origin: int(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
@@ -184,17 +185,16 @@ export const CommonNames = sqliteTable('common_names', {
     name: text(),
     position: integer().default(1),
     active: integer({ mode: 'boolean' }).default(true),
-    desc_active: integer({ mode: 'boolean' }).default(true),
-    parent_id: integer(),
-    categories: text(),
-    productTypes: text(),
-    storeId: text(),
-    storeName: text(),
+    descActive: integer("desc_active", { mode: 'boolean' }).default(true),
+    parentId: integer("parent_id"),
+    categories: text("categories"),
+    productTypes: text("product_types"),
+    storeId: text("store_id"),
+    storeName: text("store_name"),
     handle: text(),
     isLinea: integer({ mode: 'boolean' }),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Tags = sqliteTable('tags', {
@@ -239,25 +239,22 @@ export const Metadatas = sqliteTable('metadatas', {
     tooltip: text(),
     idGroup: integer('id_group', { mode: 'number' }).default(1),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Prices = sqliteTable('prices', {
-    id: integer().primaryKey(),
-    product: integer().notNull(),
+    id: integer({ mode: 'number' }).primaryKey(),
     cost: real().notNull().default(0.0),
     added: real().notNull().default(0.0),
     value: real().notNull().default(0.0),
-    asignedBy: text('asigned_by').notNull(),
-    regularPrice: real().notNull().default(0.0),
-    salePrice: real().notNull().default(0.0),
+    assignedBy: text('assigned_by').notNull(),
+    active: integer({ mode: 'boolean' }).notNull(),
+    regularPrice: real("regular_price").notNull().default(0.0),
+    salePrice: real("sale_price").notNull().default(0.0),
     offer: integer({ mode: 'boolean' }).notNull(),
-    category: integer({ mode: 'number' }).notNull(),
-    active: integer({ mode: 'boolean' }).default(true),
+    categoryId: integer("category_id", { mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const TagsProducts = sqliteTable('tags_products', {
@@ -299,9 +296,9 @@ export const MetadataProductAsociations = sqliteTable('metadata_product_asociati
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
-export const Stocks = sqliteTable('stocks', {
+export const Stocks = sqliteTable('tmp_stocks', {
     id: integer({ mode: 'number' }).primaryKey(),
-    product: integer("product_id", { mode: 'number' }).notNull(),
+    productId: integer("product_id", { mode: 'number' }).notNull(),
     min: integer({ mode: 'number' }).notNull(),
     max: integer({ mode: 'number' }).notNull(),
     current: integer({ mode: 'number' }).notNull(),
@@ -416,16 +413,20 @@ export const Metafields = sqliteTable('product_metafields', {
 });
 
 export const Offers = sqliteTable('offers', {
-    id: integer().primaryKey(),
+    id: integer({ mode: 'number' }).primaryKey(),
     offerId: integer().notNull().default(1),
-    productId: integer().notNull(),
+    product: integer({ mode: 'number' }).notNull(),
     startDate: int('start_date', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
     endDate: int('end_date', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
     closeDate: int('close_date', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+    price: real("price").notNull().default(0.0),
+    storePrice: real("store_price").notNull().default(0.0),
+    active: integer({ mode: 'boolean' }).notNull(),
+    collect: blob('collect', { mode: 'bigint' }),
     status: integer().notNull().default(1),
-    deletedAt: integer().notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
-    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
+    deletedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Sucursals = sqliteTable('sucursals', {
@@ -487,6 +488,19 @@ export const MetadataValueRelation = sqliteTable('metadata_value_relation', {
     active: integer({ mode: 'boolean' }).notNull(),
     allowDescription: integer({ mode: 'boolean' }).notNull(),
     allowCallection: integer({ mode: 'boolean' }).notNull(),
+    createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+});
+
+export const ProductStocks = sqliteTable('tmp_stocks', {
+    id: integer({ mode: 'number' }).primaryKey(),
+    product_id: integer("product_id", { mode: 'number' }).notNull(),
+    min: integer({ mode: 'number' }).notNull(),
+    max: integer({ mode: 'number' }).notNull(),
+    current: integer({ mode: 'number' }).notNull(),
+    last: integer({ mode: 'number' }).notNull(),
+    sucursal: integer({ mode: 'number' }).notNull(),
+    warehouse: integer({ mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
