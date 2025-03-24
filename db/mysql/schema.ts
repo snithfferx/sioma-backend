@@ -118,9 +118,7 @@ export const AverageCost = mysqlTable("costo_promedio", {
     rised: varchar("elevado", { length: 15 }),
     user: varchar("usuario", { length: 25 }),
     dateTime: varchar("fecha_hora", { length: 50 }),
-    restoredEntry: int("entrada_restaurada"),
-    // createdAt: datetime("created_at", { mode: 'string' }).default('current_timestamp()').notNull(),
-    // updatedAt: datetime("updated_at", { mode: 'string' }).default('current_timestamp()').notNull(),
+    restoredEntry: int("entrada_restaurada")
 });
 
 export const AddedValues = mysqlTable("valor_agregado", {
