@@ -18,6 +18,8 @@ import {
 import { DsinProductSchema } from "@Types/schemas/Dsin.schema";
 import { ShopinguiProduct, ShopinguiBrand, ShopinguiCategory, ShopinguiCommonName, ShopinguiProductType, ShopinguiProductPrice, ShopinguiProductStocks, ShopinguiMetadatas } from "@Types/schemas/Shopify.schema";
 import { generateSlug } from "@Utils/slug";
+import { ProducrModel } from "@Modules/products/Product.model";
+
 import { db as sqliteDb } from "@DB/sqlite";
 import {
     Prices,
@@ -32,6 +34,8 @@ import {
     Metadatas,
     MetadataProductAsociations
 } from "@DB/sqlite/schema";
+
+const productModel = new ProducrModel();
 
 export class DsinModel {
     async getProductsByTerms(terms: string, page: number, limit: number) {
