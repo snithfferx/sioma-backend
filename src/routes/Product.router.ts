@@ -4,7 +4,7 @@ import { auth, AuthRequest } from '../middleware';
 
 const productService = new ProductService();
 
-const ProductRouter = Router()
+export const ProductRouter = Router()
     .use(auth)
     .post('/create', async (req: AuthRequest, res: Response) => {
         try {
@@ -43,7 +43,7 @@ const ProductRouter = Router()
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 100;
             console.log("page", page, "limit", limit);
-            const products = await productService.getAllProducts(page, limit);
+            const products = await productService.getAllProducts(null, page, limit);
             res.json(products);
         } catch (error) {
             if (error instanceof Error) {
@@ -84,5 +84,3 @@ const ProductRouter = Router()
             }
         }
     });
-
-export default ProductRouter;
