@@ -11,7 +11,6 @@ export interface DsinProductType {
 export interface DsinCategory {
     id: number;
     name: string;
-    client: number | null;
 }
 
 export interface DsinCountry {
@@ -58,65 +57,65 @@ export interface DsinProductPrice {
     offer: boolean;
     price_category: number;
 }
-
+/* {  */
 export interface DsinProductSchema {
     product: {
         id: number,
-        name: string,
+        name: string | null,
         sku: string,
-        upc: string,
-        mpn: string,
-        image: string,
-        weight: number,
-        shortDescription: string,
-        longDescription: string,
-        min: number,
-        max: number,
-        warranty: number,
-        storeId: number,
-        storeStatus: number,
+        upc: string | null,
+        mpn: string | null,
+        image: string | null,
+        weight: string | null,
+        shortDescription: string | null,
+        longDescription: string | null,
+        min: number | null,
+        max: number | null,
+        warranty: string | null,
+        storeId: string | null,
+        storeStatus: string | null,
     },
-    origin: DsinCountry,
-    type: DsinProductType,
-    category: DsinCategory,
-    brand: DsinBrand,
+    origin: DsinCountry | null,
+    type: DsinProductType | null,
+    category: DsinCategory | null,
+    brand: DsinBrand | null,
     offer: {
-        end: number,
-        isOffer: number,
-        value: number,
-        store: number,
-        isStoreActive: number,
-        collect: number
+        end: string | null,
+        isOffer: string | null,
+        value: number | null,
+        store: number | null,
+        isStoreActive: number | null,
+        collect: string | null
     },
     price: {
-        cost: number,
-        total: number,
-        asignBy: string,
-        added: number,
-        updatedAt: string,
-        store: number,
-        client: string,
-        category: number
+        cost: number | null,
+        total: number | null,
+        asignBy: string | null,
+        added: number | null,
+        updatedAt: string | null,
+        store: number | null,
+        client: string | null,
+        category: number | null
     },
-    commonName: DsinCommonName,
+    commonName: { id: number; productType: number; name: string; position: number; createdAt: string; active: number; storeId: string; handle: string; keywords: string | null; } | null,
     combo: {
         combo: string,
         id: string
-    },
+    } | null,
     bundle: {
         bundle: string,
         id: string
-    },
+    } | null,
     dsComputer: {
         dsComputer: string,
         id: string
-    },
+    } | null,
     variant: {
         isVariant: number,
         id: string,
         title: string,
-        main: number
-    }
+        main: string
+    } | null
 }
 
 export interface CreateProductRequest {
