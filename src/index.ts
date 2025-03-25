@@ -1,30 +1,33 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import { AuthRouter } from "@Routes/Auth.router";
 // import { UserRouter } from "@Routes/User.router";
 import { ProductRouter } from "@Routes/Product.router";
 import { APP_PORT, APP_HOST } from "@Configs/constants";
+import "dotenv/config";
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", AuthRouter);
 // app.use("/api/users", UserRouter);
 app.use("/api/products", ProductRouter);
+const host = APP_HOST || 'localhost';
+const port = Number(APP_PORT) || 3000;
 
-const port = APP_PORT || 3000;
-
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
     res.send("Hello Welcome to SIOMA");
 })
     // Health check
-    .get('/health', (req, res) => {
+    .get('/health', (req: Request, res: Response) => {
         res.json({ status: 'I\'m fine..! Thanks for asking.' });
     })
-    .get('/api', (req, res) => {
+    .get('/api', (req: Request, res: Response) => {
         res.json({ status: 'Welcome to SIOMA API' });
     });
-app.listen(`${APP_HOST}:${port}`, () => {
-    console.log(`Listening on host ${APP_HOST}; port ${port}...`);
+// Start the server
+app.listen(port, host, () => {
+    console.log(`Listening on host ${host}; port ${port}...`);
 });
