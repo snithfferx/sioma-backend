@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { AuthRouter } from "@Routes/Auth.router";
 // import { UserRouter } from "@Routes/User.router";
-// import { ProductRouter } from "@Routes/Product.router";
+import { ProductRouter } from "@Routes/Product.router";
 import { APP_PORT, APP_HOST } from "@Configs/constants";
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use("/api/auth", AuthRouter);
 // app.use("/api/users", UserRouter);
-// app.use("/api/products", ProductRouter);
+app.use("/api/products", ProductRouter);
 
 const port = APP_PORT || 3000;
 
