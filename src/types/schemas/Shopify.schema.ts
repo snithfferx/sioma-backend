@@ -134,9 +134,9 @@ export interface ShopinguiProduct {
 
 export interface ShopinguiProductType {
     id: number;
-    name: string | null;
+    name: string;
     category: number;
-    isLine: number;
+    isLine: boolean;
     priceCategory: number;
 }
 
