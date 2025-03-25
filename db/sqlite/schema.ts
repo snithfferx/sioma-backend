@@ -11,18 +11,18 @@ export const Users = sqliteTable('users', {
     resetToken: text('reset_token'),
     tokenExpiry: int('reset_expiry', { mode: 'timestamp' }),
     apiToken: text('api_token'),
-    person: int(),
-    level: int(),
-    contact: int(),
+    person: int("person"),
+    level: int("level"),
+    contact: int("contact"),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const UserLevel = sqliteTable('user_level', {
     id: int('id').primaryKey({ autoIncrement: true }),
-    name: text().notNull(),
+    name: text("name").notNull(),
     levelValue: text('level_value').notNull(),
-    permissions: text().default('[1]'),
+    permissions: text("permissions").default('[1]'),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
@@ -35,30 +35,30 @@ export const Person = sqliteTable('person', {
     secondLastName: text('second_last_name'),
     thirdName: text('third_name'),
     thirdLastName: text('third_last_name'),
-    gender: text(),
-    birthday: int({ mode: 'timestamp' }),
-    address: text(),
-    phone: text().unique(),
-    email: text().unique(),
+    gender: text("gender"),
+    birthday: int("birthday", { mode: 'timestamp' }),
+    address: text("address"),
+    phone: text("phone").unique(),
+    email: text("email").unique(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Address = sqliteTable('address', {
     id: int('id').primaryKey({ autoIncrement: true }),
-    name: text(),
-    address: text(),
-    phone: text(),
-    email: text(),
-    contact: text(),
-    contact_phone: text(),
-    contact_email: text(),
-    country: text(),
-    state: text(),
-    city: text(),
-    street: text(),
-    optional: text(),
-    status: int().default(1),
+    name: text("name"),
+    address: text("address"),
+    phone: text("phone"),
+    email: text("email"),
+    contact: text("contact"),
+    contact_phone: text("contact_phone"),
+    contact_email: text("contact_email"),
+    country: text("country"),
+    state: text("state"),
+    city: text("city"),
+    street: text("street"),
+    optional: text("optional"),
+    status: int("status").default(1),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
@@ -66,15 +66,15 @@ export const Address = sqliteTable('address', {
 
 export const Contact = sqliteTable('contact', {
     id: int('id').primaryKey({ autoIncrement: true }),
-    name: text(),
-    email: text(),
-    homePhone: text(),
-    mobilePhone: text(),
-    workPhone: text(),
-    addressId: int(),
-    skype: text(),
-    whatsapp: int().default(0),
-    status: int().default(1),
+    name: text("name"),
+    email: text("email"),
+    homePhone: text("homePhone"),
+    mobilePhone: text("mobilePhone"),
+    workPhone: text("workPhone"),
+    addressId: int("addressId"),
+    skype: text("skype"),
+    whatsapp: int("whatsapp").default(0),
+    status: int("status").default(1),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
@@ -104,7 +104,7 @@ export const ShopifySession = sqliteTable('shopify_session', {
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
-export const Session = sqliteTable('user_session', {
+export const UserSession = sqliteTable('user_session', {
     id: text('id').primaryKey(),
     userId: blob('user_id', { mode: 'bigint' }),
     token: text('token').notNull(),
@@ -115,113 +115,115 @@ export const Session = sqliteTable('user_session', {
 })
 
 export const Products = sqliteTable('products', {
-    id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+    id: int("id").primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
     handle: text('hadle'),
     longDescription: text('long_description'),
     shortDescription: text('short_description'),
     seoDescription: text('seo_description'),
-    tags: text({ mode: 'json' }).default('[]'), sku: text(),
-    mpn: text(),
-    upc: text().notNull(),
-    ean: text(),
-    isbn: text(),
-    weight: real(),
+    tags: text("tags", { mode: 'json' }).default('[]'),
+    sku: text("sku"),
+    mpn: text("mpn"),
+    upc: text("upc").notNull(),
+    ean: text("ean"),
+    isbn: text("isbn"),
+    weight: real("weight"),
     weightUnit: text('weight_unit'),
-    width: real(),
-    height: real(),
-    length: real(),
-    warranty: integer({ mode: 'number' }).default(0),
+    width: real("width"),
+    height: real("height"),
+    length: real("length"),
+    warranty: integer("warranty", { mode: 'number' }).default(0),
     innerDiameter: real('inner_diameter'),
     outerDiameter: real('outer_diameter'),
     measureUnit: text('measure_unit'),
-    customizable: integer({ mode: 'boolean' }),
-    downloadable: integer({ mode: 'boolean' }),
+    customizable: integer("customizable", { mode: 'boolean' }),
+    downloadable: integer("downloadable", { mode: 'boolean' }),
     downloadableFiles: text('downloadable_files', { mode: 'json' }),
     customizableFields: text('customizable_fields', { mode: 'json' }),
     shippingVolume: real('shipping_volume'),
     shippingVolumeUnit: text('shipping_volume_unit'),
     shippingWeight: real('shipping_weight'),
     shippingWeightUnit: text('shipping_weight_unit'),
-    syncronized: integer({ mode: 'boolean' }),
+    syncronized: integer("syncronized", { mode: 'boolean' }),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const ProductRelations = sqliteTable('product_relations', {
-    id: integer({ mode: 'number' }).primaryKey(),
-    product: integer({ mode: 'number' }).notNull(),
-    status: integer({ mode: 'number' }).notNull(),
-    brand: integer({ mode: 'number' }).notNull(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    product: integer("product", { mode: 'number' }).notNull(),
+    status: integer("status", { mode: 'number' }).notNull(),
+    brand: integer("brand", { mode: 'number' }).notNull(),
     categories: text('categories'),
     images: text('images'),
     prices: text('prices'),
     stocks: text('stocks'),
-    store: integer({ mode: 'number' }),
+    store: blob("store", { mode: 'bigint' }),
     variants: text('variants'),
-    dsin: integer({ mode: 'number' }).notNull(),
+    dsin: int("dsin").notNull(),
     productTypes: text('product_types'),
     commonNames: text('common_name').default('[]'),
-    origin: int(),
+    origin: int("origin"),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Brands = sqliteTable('brands', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     description: text('description'),
     logo: text('logo'),
-    active: integer({ mode: 'boolean' }),
+    active: integer("active", { mode: 'boolean' }),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const CommonNames = sqliteTable('common_names', {
-    id: integer().primaryKey(),
-    name: text(),
-    position: integer().default(1),
-    active: integer({ mode: 'boolean' }).default(true),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    name: text("name"),
+    position: integer("position").default(1),
+    active: integer("active", { mode: 'boolean' }).default(true),
     descActive: integer("desc_active", { mode: 'boolean' }).default(true),
     parentId: integer("parent_id"),
     categories: text("categories"),
     productTypes: text("product_types"),
     storeId: text("store_id"),
     storeName: text("store_name"),
-    handle: text(),
-    isLinea: integer({ mode: 'boolean' }),
+    handle: text("handle"),
+    isLinea: integer("is_line", { mode: 'boolean' }),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Tags = sqliteTable('tags', {
-    id: integer().primaryKey(),
-    name: text(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    name: text("name"),
+    active: integer("active", { mode: 'boolean' }).default(true),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Categories = sqliteTable('categories', {
-    id: integer().primaryKey(),
-    name: text(),
-    slug: text(),
-    description: text(),
-    parents: text(),
-    active: integer({ mode: 'boolean' }).default(true),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    name: text("name"),
+    slug: text("slug"),
+    description: text("description"),
+    parents: text("parents"),
+    active: integer("active", { mode: 'boolean' }).default(true),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Groups = sqliteTable('groups', {
-    id: integer().primaryKey(),
-    name: text(),
-    position: integer({ mode: 'number' }).default(1),
-    active: integer({ mode: 'boolean' }).default(true),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    name: text("name"),
+    position: integer("position", { mode: 'number' }).default(1),
+    active: integer("active", { mode: 'boolean' }).default(true),
     isAllowDesc: integer("is_allow_desc", { mode: 'boolean' }).default(true),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -229,51 +231,51 @@ export const Groups = sqliteTable('groups', {
 });
 
 export const Metadatas = sqliteTable('metadatas', {
-    id: integer().primaryKey(),
-    name: text(),
-    position: integer({ mode: 'number' }).default(1),
-    active: integer({ mode: 'boolean' }).default(true),
+    id: integer("id").primaryKey(),
+    name: text("name").notNull(),
+    position: integer("position", { mode: 'number' }).default(1),
+    active: integer("active", { mode: 'boolean' }).default(true),
     allowDescription: integer('allow_description', { mode: 'boolean' }).default(true),
     isFeature: integer('is_feature', { mode: 'boolean' }).default(false),
-    format: text(),
-    tooltip: text(),
+    format: text("format"),
+    tooltip: text("tooltip"),
     idGroup: integer('id_group', { mode: 'number' }).default(1),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Prices = sqliteTable('prices', {
-    id: integer({ mode: 'number' }).primaryKey(),
-    cost: real().notNull().default(0.0),
-    added: real().notNull().default(0.0),
-    value: real().notNull().default(0.0),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    cost: real("cost").notNull().default(0.0),
+    added: real("added").notNull().default(0.0),
+    value: real("value").notNull().default(0.0),
     assignedBy: text('assigned_by').notNull(),
-    active: integer({ mode: 'boolean' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     regularPrice: real("regular_price").notNull().default(0.0),
     salePrice: real("sale_price").notNull().default(0.0),
-    offer: integer({ mode: 'boolean' }).notNull(),
+    offer: integer("offer", { mode: 'boolean' }).notNull().default(false),
     categoryId: integer("category_id", { mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const TagsProducts = sqliteTable('tags_products', {
-    id: integer().primaryKey(),
-    tag: integer().notNull(),
-    product: integer().notNull(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    tag: integer("tag").notNull(),
+    product: integer("product").notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const StoreInformation = sqliteTable('store_information', {
-    id: integer().primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
-    product: integer().notNull(),
+    product: integer("product").notNull(),
     storeId: text('store_id'),
-    price: real().notNull().default(0.0),
+    price: real("price").notNull().default(0.0),
     priceType: integer('price_type', { mode: 'number' }).notNull(),
-    offer: integer({ mode: 'boolean' }).notNull(),
+    offer: integer("offer", { mode: 'boolean' }).notNull(),
     status: text('status').notNull().default('1'),
     combo: text('combo'),
     bundle: text('bundle'),
@@ -285,11 +287,11 @@ export const StoreInformation = sqliteTable('store_information', {
 });
 
 export const MetadataProductAsociations = sqliteTable('metadata_product_asociations', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     metadataId: integer('metadata_id', { mode: 'number' }).notNull(),
     productId: integer('product_id', { mode: 'number' }).notNull(),
     content: text('content').notNull(),
-    active: integer({ mode: 'boolean' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     allowDescription: integer('allow_description', { mode: 'boolean' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -297,35 +299,35 @@ export const MetadataProductAsociations = sqliteTable('metadata_product_asociati
 });
 
 export const Stocks = sqliteTable('tmp_stocks', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     productId: integer("product_id", { mode: 'number' }).notNull(),
-    min: integer({ mode: 'number' }).notNull(),
-    max: integer({ mode: 'number' }).notNull(),
-    current: integer({ mode: 'number' }).notNull(),
-    last: integer({ mode: 'number' }).notNull(),
-    sucursal: integer({ mode: 'number' }).notNull(),
-    warehouse: integer({ mode: 'number' }).notNull(),
+    min: integer("min", { mode: 'number' }).notNull(),
+    max: integer("max", { mode: 'number' }).notNull(),
+    current: integer("current", { mode: 'number' }).notNull(),
+    last: integer("last", { mode: 'number' }).notNull(),
+    sucursal: integer("sucursal", { mode: 'number' }).notNull(),
+    warehouse: integer("warehouse", { mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Warehouses = sqliteTable('warehouses', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
-    sucursal: integer({ mode: 'number' }).notNull(),
+    sucursal: integer("sucursal", { mode: 'number' }).notNull(),
     code: text('code').notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Images = sqliteTable('images', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     url: text('url').notNull(),
     thumbnail: text('thumbnail').notNull(),
-    postion: integer({ mode: 'number' }).notNull(),
-    active: integer({ mode: 'boolean' }).notNull(),
+    postion: integer("position", { mode: 'number' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     reference: text('references').notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -333,7 +335,7 @@ export const Images = sqliteTable('images', {
 });
 
 export const Variants = sqliteTable('variants', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     title: text('title').notNull(),
     slug: text('slug').notNull(),
@@ -342,12 +344,12 @@ export const Variants = sqliteTable('variants', {
     upc: text('upc').notNull(),
     ean: text('ean'),
     storeId: text('store_id'),
-    weight: integer({ mode: 'number' }).notNull().default(0),
+    weight: integer("weight", { mode: 'number' }).notNull().default(0),
     weightUnit: text('weight_unit').default('kg'),
-    height: integer({ mode: 'number' }).notNull().default(0),
-    width: integer({ mode: 'number' }).notNull().default(0),
-    length: integer({ mode: 'number' }).notNull().default(0),
-    active: integer({ mode: 'boolean' }).notNull().default(true),
+    height: integer("height", { mode: 'number' }).notNull().default(0),
+    width: integer("width", { mode: 'number' }).notNull().default(0),
+    length: integer("length", { mode: 'number' }).notNull().default(0),
+    active: integer("active", { mode: 'boolean' }).notNull().default(true),
     measureUnit: text('measure_unit').default('mm'),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -355,19 +357,19 @@ export const Variants = sqliteTable('variants', {
 });
 
 export const VariantOption = sqliteTable('variant_options', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     values: text('values'),
-    active: integer({ mode: 'boolean' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const VariantOptionValue = sqliteTable('variant_option_values', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
-    active: integer({ mode: 'boolean' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     image: text('image'),
     value: text('value'),
     abreviation: text('abreviation'),
@@ -377,19 +379,19 @@ export const VariantOptionValue = sqliteTable('variant_option_values', {
 });
 
 export const VariantRelation = sqliteTable('variant_relations', {
-    id: integer({ mode: 'number' }).primaryKey(),
-    variantId: integer({ mode: 'number' }).notNull(),
-    productId: integer({ mode: 'number' }).notNull(),
-    variantOptionValueId: integer({ mode: 'number' }).notNull(),
-    mainVariantId: integer({ mode: 'number' }).notNull(),
-    storeId: integer({ mode: 'number' }).notNull(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    variantId: integer("variant_id", { mode: 'number' }).notNull(),
+    productId: integer("product_id", { mode: 'number' }).notNull(),
+    variantOptionValueId: integer("variant_option_value_id", { mode: 'number' }).notNull(),
+    mainVariantId: integer("main_variant_id", { mode: 'number' }).notNull(),
+    storeId: integer("store_id", { mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Country = sqliteTable('countries', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -397,71 +399,71 @@ export const Country = sqliteTable('countries', {
 });
 
 export const Metafields = sqliteTable('product_metafields', {
-    id: integer({ mode: 'number' }).primaryKey(),
-    product: integer({ mode: 'number' }).notNull(),
-    name: text().notNull(), // Metafield name/key
-    nameSpace: text().notNull(), // Folder name container
-    value: text().notNull(),
-    description: text(),
-    contentType: text(),
-    position: integer({ mode: 'number' }).notNull(),
-    active: integer({ mode: 'boolean' }).notNull(),
-    allowDescription: integer({ mode: 'boolean' }).notNull(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    product: integer("product", { mode: 'number' }).notNull(),
+    name: text("name").notNull(), // Metafield name/key
+    nameSpace: text("name_space").notNull(), // Folder name container
+    value: text("value").notNull(),
+    description: text("description"),
+    contentType: text("content_type"),
+    position: integer("position", { mode: 'number' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
+    allowDescription: integer("allow_description", { mode: 'boolean' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('deleted_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Offers = sqliteTable('offers', {
-    id: integer({ mode: 'number' }).primaryKey(),
-    offerId: integer().notNull().default(1),
-    product: integer({ mode: 'number' }).notNull(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    offerId: integer("offer_id").notNull().default(1),
+    product: integer("product", { mode: 'number' }).notNull(),
     startDate: int('start_date', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
     endDate: int('end_date', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
     closeDate: int('close_date', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
     price: real("price").notNull().default(0.0),
     storePrice: real("store_price").notNull().default(0.0),
-    active: integer({ mode: 'boolean' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     collect: blob('collect', { mode: 'bigint' }),
-    status: integer().notNull().default(1),
+    status: integer("status").notNull().default(1),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     deletedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const Sucursals = sqliteTable('sucursals', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const User = sqliteTable('users', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     email: text('email').notNull(),
     password: text('password').notNull(),
     verifiedToken: text('verified_token'),
     resetToken: text('reset_token'),
     tokenExpiry: text('token_expiry'),
-    emailVerified: integer({ mode: 'boolean' }).notNull(),
+    emailVerified: integer("email_verified", { mode: 'boolean' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const SidebarMenu = sqliteTable('sidebar_menu', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     name: text('name').notNull(),
     url: text('url').notNull(),
     icon: text('icon').notNull(),
-    parentId: integer({ mode: 'number' }),
-    position: integer({ mode: 'number' }).notNull(),
+    parentId: integer("parent_id", { mode: 'number' }),
+    position: integer("position", { mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const MetadataRelations = sqliteTable('metadata_relations', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     metadataId: integer('metadata_id', { mode: 'number' }).notNull(),
     commonNames: text('common_names'),
     categories: text('categories'),
@@ -471,36 +473,57 @@ export const MetadataRelations = sqliteTable('metadata_relations', {
 });
 
 export const MetadataValue = sqliteTable('metadata_values', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     metadataId: integer('metadata_id', { mode: 'number' }).notNull(),
     value: text('value').notNull(),
-    active: integer({ mode: 'boolean' }).notNull(),
+    active: integer("active", { mode: 'boolean' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const MetadataValueRelation = sqliteTable('metadata_value_relation', {
-    id: integer({ mode: 'number' }).primaryKey(),
-    metadataValue: integer({ mode: 'number' }).notNull(),
-    product: integer({ mode: 'number' }).notNull(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    metadataValue: integer("metadata_value", { mode: 'number' }).notNull(),
+    product: integer("product", { mode: 'number' }).notNull(),
     content: text('content'),
-    position: integer({ mode: 'number' }).default(1),
-    active: integer({ mode: 'boolean' }).notNull(),
-    allowDescription: integer({ mode: 'boolean' }).notNull(),
-    allowCallection: integer({ mode: 'boolean' }).notNull(),
+    position: integer("position", { mode: 'number' }).default(1),
+    active: integer("active", { mode: 'boolean' }).notNull(),
+    allowDescription: integer("allow_description", { mode: 'boolean' }).notNull(),
+    allowCallection: integer("allow_callection", { mode: 'boolean' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
 });
 
 export const ProductStocks = sqliteTable('tmp_stocks', {
-    id: integer({ mode: 'number' }).primaryKey(),
+    id: integer("id", { mode: 'number' }).primaryKey(),
     product_id: integer("product_id", { mode: 'number' }).notNull(),
-    min: integer({ mode: 'number' }).notNull(),
-    max: integer({ mode: 'number' }).notNull(),
-    current: integer({ mode: 'number' }).notNull(),
-    last: integer({ mode: 'number' }).notNull(),
-    sucursal: integer({ mode: 'number' }).notNull(),
-    warehouse: integer({ mode: 'number' }).notNull(),
+    min: integer("min", { mode: 'number' }).notNull(),
+    max: integer("max", { mode: 'number' }).notNull(),
+    current: integer("current", { mode: 'number' }).notNull(),
+    last: integer("last", { mode: 'number' }).notNull(),
+    sucursal: integer("sucursal", { mode: 'number' }).notNull(),
+    warehouse: integer("warehouse", { mode: 'number' }).notNull(),
     createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
     updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+});
+
+export const ProductTypes = sqliteTable('product_type', {
+    id: integer("id", { mode: 'number' }).primaryKey(),
+    name: text('name').notNull(),
+    categories: text("categories"),
+    isLine: integer("is_line", { mode: 'boolean' }).notNull(),
+    parents: text("parents"),
+    createdAt: int('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date())
+});
+
+export const StoreSession = sqliteTable('session', {
+    id: text('id').primaryKey(),
+    shop: text('shop').notNull(),
+    state: text('state').notNull(),
+    isOnline: integer('is_online', { mode: 'boolean' }).notNull().default(false),
+    scope: text('scope'),
+    expires: text('expires'),
+    accessToken: text('access_token'),
+    userId: blob('user_id', { mode: 'bigint' })
 });
