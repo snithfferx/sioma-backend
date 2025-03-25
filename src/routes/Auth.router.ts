@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response } from "express";
 import { AuthService } from '@Services/Auth.service';
 import { LoginSchema, RegisterSchema } from '@Types/validators/Auth.validator';
 
