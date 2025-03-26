@@ -1,10 +1,12 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import { APP_PORT, APP_HOST } from "@Configs/constants";
+import "dotenv/config";
+
 import { AuthRouter } from "@Routes/Auth.router";
 // import { UserRouter } from "@Routes/User.router";
 import { ProductRouter } from "@Routes/Product.router";
-import { APP_PORT, APP_HOST } from "@Configs/constants";
-import "dotenv/config";
+import { CategoryRouter } from "@Routes/CategoryRouter";
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.use(express.json());
 app.use("/api/auth", AuthRouter);
 // app.use("/api/users", UserRouter);
 app.use("/api/products", ProductRouter);
+app.use("/api/categories", CategoryRouter);
 const host = APP_HOST || 'localhost';
 const port = Number(APP_PORT) || 3000;
 
