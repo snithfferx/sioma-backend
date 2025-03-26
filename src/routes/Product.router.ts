@@ -42,8 +42,9 @@ export const ProductRouter = Router()
         try {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 100;
+            const terms = req.query.terms as string || null;
             console.log("page", page, "limit", limit);
-            const products = await productService.getAllProducts(null, page, limit);
+            const products = await productService.getAllProducts(terms, page, limit);
             res.json(products);
         } catch (error) {
             if (error instanceof Error) {
