@@ -1,17 +1,15 @@
-import { db } from "@DB/sqlite";
-import { Products } from "@DB/sqlite/schema";
 import { ProductController } from "@Modules/products/Product.controller";
 
 const productController = new ProductController();
 
 export class ProductService {
     async getAllProducts(terms: string | null, page: number = 1, limit: number = 10) {
+        const list = await productController.getAllProducts(terms, page, limit);
         // const list = await db.select().from(Products).limit(limit).offset((page - 1) * limit);
-        // if (!list) {
-        //     return Error("Product not found");
-        // }
-        // return list;
-        return [];
+        if (!list) {
+            return Error("Product not found");
+        }
+        return list;
     }
     async createProduct(data: any, user: number) {
         return "Product created";
