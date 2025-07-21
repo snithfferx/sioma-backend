@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Response } from "express";
 import cors from "cors";
 import { APP_PORT, APP_HOST } from "@Configs/constants";
 import "dotenv/config";
@@ -7,6 +7,7 @@ import { AuthRouter } from "@Routes/Auth.router";
 // import { UserRouter } from "@Routes/User.router";
 import { ProductRouter } from "@Routes/Product.router";
 import { CategoryRouter } from "@Routes/CategoryRouter";
+import { CommonNameRouter } from "@Routes/CommonNameRouter";
 
 const app = express();
 
@@ -17,17 +18,19 @@ app.use("/api/auth", AuthRouter);
 // app.use("/api/users", UserRouter);
 app.use("/api/products", ProductRouter);
 app.use("/api/categories", CategoryRouter);
+app.use("/api/common-names", CommonNameRouter);
+
 const host = APP_HOST || 'localhost';
 const port = Number(APP_PORT) || 3000;
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (res: Response) => {
     res.send("Hello Welcome to SIOMA");
 })
     // Health check
-    .get('/health', (req: Request, res: Response) => {
+    .get('/health', (res: Response) => {
         res.json({ status: 'I\'m fine..! Thanks for asking.' });
     })
-    .get('/api', (req: Request, res: Response) => {
+    .get('/api', (res: Response) => {
         res.json({ status: 'Welcome to SIOMA API' });
     });
 // Start the server
