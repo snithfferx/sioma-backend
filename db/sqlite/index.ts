@@ -1,14 +1,11 @@
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
-import * as schema from "@DB/sqlite/schema";
-import { DB_NAME, DB_HOST } from "@Configs/constants";
+import { DB_NAME, DB_HOST } from '@App/configs/constants';
+import { drizzle } from 'drizzle-orm/libsql/node';
 
-if (!DB_NAME || !DB_HOST) {
-    throw new Error("Missing Database Configuration");
-}
+const database = `${DB_HOST}/${DB_NAME}.db`;
+// const database = `${process.env.DATABASE_HOST}/prod/${process.env.DATABASE_NAME}.db`;
 
-const db_url = `${DB_HOST}${DB_NAME}.db`;
-
-export const client = createClient({ url: db_url || "file:./dev.db" });
-
-export const db = drizzle(client, { schema });
+export const db = drizzle({
+	connection: {
+		url: database
+	}
+});
