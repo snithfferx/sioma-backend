@@ -1,39 +1,41 @@
 import { Router, Request, Response } from 'express';
-import { CategoriesController } from '@Modules/categories/Categories.controller';
+import { CommonNamesController } from '@Modules/common_names/commonNames.controller';
 // import { auth, AuthRequest } from '../middleware';
 
-const categoriesController = new CategoriesController();
+const Controller = new CommonNamesController();
 
 export const CategoryRouter = Router()
-    // .use(auth)
-    .get('/all', async (req: Request, res: Response) => {
+    .post('/create', async (req: Request, res: Response) => {
         try {
-            const page = parseInt(req.query.page as string) || 1;
-            const limit = parseInt(req.query.limit as string) || 100;
-            const categories = await categoriesController.getAllCategories(page, limit);
-            res.json(categories);
+            const commonName = await Controller.createCommonName(req.body);
+            res.status(200).json(commonName);
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(400).json({ error: error.message });
-            } else {
-                res.status(400).json({ error: 'Invalid request' });
-            }
+            res.status(500).json({ error: 'Internal server error' });
         }
     })
-    /* .get('/:id', async (req: Request, res: Response) => {
+    .get('/all', async (req: Request, res: Response) => {
+        const { terms, page, limit, active, sort } = req.query;
         try {
-            const id = parseInt(req.params.id);
-            const category = await categoriesController.getCategoryById(id);
-            if (category) {
-                res.status(200).json(category);
-            } else {
-                res.status(404).json({ error: 'Category not found' });
-            }
+            const commonNames = await Controller.getAllCommonNames(terms as string, parseInt(page as string), parseInt(limit as string), active as unknown as boolean, sort as string);
+            res.status(200).json(commonNames);
         } catch (error) {
-            if (error instanceof Error) {
-                res.status(400).json({ error: error.message });
-            } else {
-                res.status(400).json({ error: 'Invalid request' });
-            }
+            res.status(500).json({ error: 'Internal server error' });
         }
-    }); */
+    })
+    .get('/filter', async (res: Response) => {
+        try {
+            const commonNames = await Controller.selectFillCommonNames();
+            res.status(200).json(commonNames);
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    })
+    .get('/:id', async (req: Request, res: Response) => {
+        const { id } = req.params;
+        try {
+            const commonName = await Controller.getCommonNameById(parseInt(id as string));
+            res.status(200).json(commonName);
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
