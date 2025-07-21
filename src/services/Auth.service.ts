@@ -1,7 +1,7 @@
 import { generateToken } from '@Utils/token';
 import { hashPassword } from '@Utils/password';
 import { LoginRequest, RegisterRequest } from '@Schemas/Auth.schema';
-import { AuthController } from '@Modules/accounts/Auth/Auth.controller';
+import { AuthController } from '@App';
 
 const authController = new AuthController();
 export class AuthService {
