@@ -1,0 +1,5 @@
+*
+!.gitignore
+!mysql/
+!sqlite/
+!postgres/

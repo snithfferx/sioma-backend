@@ -52,10 +52,13 @@
                 "src/types/*"
             ],
             "@Utils/*": [
-                "src/lib/utils/*"
+                "src/utils/*"
             ],
             "@Validators/*": [
                 "src/types/validators/*"
+            ],
+            "@Libs/*": [
+                "src/libs/*"
             ]
         },
         "resolveJsonModule": true, // Allow importing JSON files
