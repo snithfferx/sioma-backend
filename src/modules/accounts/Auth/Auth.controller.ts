@@ -1,5 +1,5 @@
 import { verifyPassword } from '@Utils/password';
-import { AuthModel } from '@Modules/accounts/Auth/Auth.model';
+import { AuthModel } from '@App';
 import type { RegisterRequest, Users } from '@Schemas/Auth.schema';
 import { PersonaModel } from '@Modules/accounts/users/Persona.model';
 
